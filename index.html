@@ -3,104 +3,51 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ShadowNet - الشبكة الخفية</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>𝑺𝒉𝒂𝒅𝒐𝒘𝑵𝒆𝒕</title>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <header class="header">
-        <div class="logo-container">
-            <img src="images/logo.png" alt="ShadowNet Logo" class="logo">
-            <h1 class="site-title">𝑺𝒉𝒂𝒅𝒐𝒘𝑵𝒆𝒕</h1>
-        </div>
-        <nav class="nav">
-            <a href="#home" class="nav-link">الرئيسية</a>
-            <a href="#about" class="nav-link">من نحن</a>
-            <a href="#services" class="nav-link">خدماتنا</a>
-            <button onclick="showAdminModal()" class="nav-link admin-login">دخول الإدمن</button>
-        </nav>
-    </header>
-
-    <main class="main-content">
-        <section id="home" class="hero-section">
-            <div class="hero-content">
-                <h2>مرحبًا بكم في ShadowNet</h2>
-                <p>الشبكة الأكثر أمانًا وخصوصية على الإنترنت</p>
+    <header>𝑺𝒉𝒂𝒅𝒐𝒘𝑵𝒆𝒕</header>
+    
+    <div class="container">
+        <!-- قسم البحث -->
+        <input type="text" class="search-bar" placeholder="ابحث في المنشورات...">
+        
+        <!-- قسم الأدمن -->
+        <div class="admin-section">
+            <h2>قسم الأدمن</h2>
+            <div>
+                <input type="text" class="admin-input" placeholder="اسم المستخدم" id="admin-username">
+                <input type="password" class="admin-input" placeholder="كلمة السر" id="admin-password">
+                <button class="btn" onclick="loginAdmin()">دخول</button>
             </div>
-        </section>
-
-        <section id="posts" class="posts-section">
-            <h2 class="section-title">آخر المنشورات</h2>
-            <div class="posts-container" id="postsContainer">
-                <!-- المنشورات سيتم عرضها هنا عبر JavaScript -->
-            </div>
-        </section>
-
-        <section id="about" class="about-section">
-            <h2 class="section-title">من نحن</h2>
-            <p>ShadowNet هي منصة توفر أعلى مستويات الخصوصية والأمان لمستخدميها. نحن نؤمن بحرية المعلومات وخصوصية الأفراد.</p>
-        </section>
-
-        <section id="services" class="services-section">
-            <h2 class="section-title">خدماتنا</h2>
-            <div class="services-grid">
-                <div class="service-card">
-                    <i class="fas fa-lock"></i>
-                    <h3>التشفير الآمن</h3>
-                    <p>نستخدم أحدث تقنيات التشفير لحماية بياناتك.</p>
-                </div>
-                <div class="service-card">
-                    <i class="fas fa-user-secret"></i>
-                    <h3>الخصوصية</h3>
-                    <p>لا نتابع نشاطك ولا نخزن بياناتك الشخصية.</p>
-                </div>
-                <div class="service-card">
-                    <i class="fas fa-shield-alt"></i>
-                    <h3>الحماية</h3>
-                    <p>نظام حماية متكامل ضد الاختراقات والتسريبات.</p>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <!-- نافذة الإدمن -->
-    <div id="adminModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeAdminModal()">&times;</span>
-            <h2>دخول الإدمن</h2>
-            <input type="password" id="adminPassword" placeholder="كلمة السر" class="admin-input">
-            <button onclick="checkAdminAccess()" class="admin-btn">دخول</button>
-            <p id="loginError" class="error-message"></p>
             
-            <div id="adminControls" style="display:none; margin-top:20px;">
-                <h3>إدارة المنشورات</h3>
-                <div class="form-group">
-                    <input type="text" id="postTitle" placeholder="عنوان المنشور" class="form-input">
-                </div>
-                <div class="form-group">
-                    <textarea id="postContent" placeholder="محتوى المنشور" class="form-textarea"></textarea>
-                </div>
-                <div class="form-group">
-                    <input type="text" id="postImage" placeholder="رابط الصورة (اختياري)" class="form-input">
-                </div>
-                <button onclick="publishPost()" class="publish-btn"><i class="fas fa-paper-plane"></i> نشر</button>
-                <div id="postPreview" class="post-preview"></div>
+            <div id="admin-actions" style="display: none;">
+                <h3>إضافة منشور جديد</h3>
+                <input type="text" class="admin-input" placeholder="عنوان المنشور" id="post-title">
+                <input type="text" class="admin-input" placeholder="رابط الصورة" id="post-image">
+                <input type="text" class="admin-input" placeholder="النص على الزر" id="post-btn-text">
+                <input type="text" class="admin-input" placeholder="رابط الزر" id="post-btn-link">
+                <button class="btn" onclick="addPost()">إضافة منشور</button>
             </div>
+        </div>
+        
+        <!-- المنشورات المميزة -->
+        <div id="featured-posts">
+            <h2>مشاركات مميزة</h2>
+            <!-- سيتم إضافة المنشورات هنا عبر JavaScript -->
+        </div>
+        
+        <!-- قسم الصور المصغرة -->
+        <div class="thumbnail-section">
+            <h2>صور مصغرة</h2>
+            <div id="thumbnails">
+                <!-- سيتم إضافة الصور المصغرة هنا عبر JavaScript -->
+            </div>
+            <button class="btn">عرض المزيد</button>
         </div>
     </div>
 
-    <footer class="footer">
-        <p>&copy; 2023 ShadowNet. جميع الحقوق محفوظة.</p>
-        <div class="social-links">
-            <a href="#"><i class="fab fa-telegram"></i></a>
-            <a href="#"><i class="fab fa-twitter"></i></a>
-            <a href="#"><i class="fab fa-github"></i></a>
-        </div>
-    </footer>
-
-    <!-- تأثير الجسيمات للخلفية -->
-    <canvas id="particlesCanvas" class="particles-canvas"></canvas>
-
-    <script src="script.js"></script>
+    <script src="js/script.js"></script>
 </body>
 </html>
