@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShadowNet - لوحة التحكم</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="admin-body">
+    <div class="admin-login-container" id="loginContainer">
+        <div class="admin-login-box">
+            <h2>دخول الإدمن</h2>
+            <input type="password" id="adminPassword" placeholder="كلمة السر" class="admin-input">
+            <button onclick="checkAdminPassword()" class="admin-btn">دخول</button>
+            <p id="loginError" class="error-message"></p>
+        </div>
+    </div>
+
+    <div class="admin-dashboard" id="adminDashboard" style="display:none;">
+        <header class="admin-header">
+            <h1>لوحة تحكم ShadowNet</h1>
+            <button onclick="logout()" class="logout-btn">تسجيل خروج</button>
+        </header>
+
+        <main class="admin-main">
+            <section class="new-post-section">
+                <h2>إنشاء منشور جديد</h2>
+                <div class="form-group">
+                    <label for="postTitle">عنوان المنشور:</label>
+                    <input type="text" id="postTitle" class="form-input">
+                </div>
+                <div class="form-group">
+                    <label for="postContent">محتوى المنشور:</label>
+                    <textarea id="postContent" class="form-textarea"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="postImage">رابط الصورة:</label>
+                    <input type="text" id="postImage" class="form-input" placeholder="أدخل رابط الصورة">
+                </div>
+                <button onclick="publishPost()" class="publish-btn">نشر</button>
+                <div id="postPreview" class="post-preview"></div>
+            </section>
+
+            <section class="existing-posts">
+                <h2>المنشورات الحالية</h2>
+                <div class="posts-list" id="adminPostsContainer">
+                    <!-- المنشورات الحالية ستظهر هنا -->
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
