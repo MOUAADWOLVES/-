@@ -20,7 +20,22 @@ document.addEventListener('DOMContentLoaded', function() {
     } else {
         // إذا كنا في الصفحة الرئيسية
         displayPosts();
+        initParticles();
     }
+    
+    // تأثيرات التمرير للهيدر
+    window.addEventListener('scroll', function() {
+        const header = document.querySelector('.header');
+        if (window.scrollY > 50) {
+            header.style.boxShadow = '0 4px 15px rgba(0, 0, 0, 0.3)';
+            header.style.backdropFilter = 'blur(10px)';
+            header.style.backgroundColor = 'rgba(44, 62, 80, 0.9)';
+        } else {
+            header.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.3)';
+            header.style.backdropFilter = 'none';
+            header.style.backgroundColor = '';
+        }
+    });
 });
 
 // عرض المنشورات في الصفحة الرئيسية
@@ -36,9 +51,11 @@ function displayPosts() {
     // عرض أحدث المنشورات أولاً
     const sortedPosts = [...posts].sort((a, b) => new Date(b.date) - new Date(a.date));
     
-    sortedPosts.forEach(post => {
+    sortedPosts.forEach((post, index) => {
         const postElement = document.createElement('div');
         postElement.className = 'post-card';
+        postElement.style.animationDelay = `${index * 0.1}s`;
+        
         postElement.innerHTML = `
             ${post.image ? `<img src="${post.image}" alt="${post.title}" class="post-image">` : ''}
             <div class="post-content">
@@ -51,32 +68,6 @@ function displayPosts() {
     });
 }
 
-// تحميل المنشورات في لوحة التحكم
-function loadAdminPosts() {
-    const adminPostsContainer = document.getElementById('adminPostsContainer');
-    adminPostsContainer.innerHTML = '';
-    
-    if (posts.length === 0) {
-        adminPostsContainer.innerHTML = '<p class="no-posts">لا توجد منشورات حتى الآن.</p>';
-        return;
-    }
-    
-    posts.forEach((post, index) => {
-        const postElement = document.createElement('div');
-        postElement.className = 'post-card';
-        postElement.innerHTML = `
-            ${post.image ? `<img src="${post.image}" alt="${post.title}" class="post-image">` : ''}
-            <div class="post-content">
-                <h3 class="post-title">${post.title}</h3>
-                <span class="post-date">${formatDate(post.date)}</span>
-                <p>${post.content}</p>
-                <button onclick="deletePost(${index})" class="delete-btn">حذف</button>
-            </div>
-        `;
-        adminPostsContainer.appendChild(postElement);
-    });
-}
-
 // التحقق من كلمة سر الإدمن
 function checkAdminPassword() {
     const password = document.getElementById('adminPassword').value;
@@ -86,9 +77,16 @@ function checkAdminPassword() {
         localStorage.setItem('adminLoggedIn', 'true');
         document.getElementById('loginContainer').style.display = 'none';
         document.getElementById('adminDashboard').style.display = 'block';
+        setTimeout(() => {
+            document.getElementById('adminDashboard').classList.add('show');
+        }, 10);
         loadAdminPosts();
     } else {
         errorElement.textContent = 'كلمة السر غير صحيحة!';
+        document.getElementById('adminPassword').style.border = '2px solid var(--error-color)';
+        setTimeout(() => {
+            document.getElementById('adminPassword').style.border = 'none';
+        }, 1000);
     }
 }
 
@@ -99,15 +97,25 @@ function logout() {
 }
 
 // نشر منشور جديد
-function publishPost() {
+async function publishPost() {
     const title = document.getElementById('postTitle').value.trim();
     const content = document.getElementById('postContent').value.trim();
     const imageUrl = document.getElementById('postImage').value.trim();
     
     if (!title || !content) {
-        alert('الرجاء إدخال عنوان ومحتوى للمنشور');
+        showAlert('الرجاء إدخال عنوان ومحتوى للمنشور', 'error');
         return;
     }
+    
+    const publishBtn = document.querySelector('.publish-btn');
+    const originalBtnText = publishBtn.textContent;
+    
+    // عرض مؤشر التقدم
+    publishBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري النشر...';
+    publishBtn.disabled = true;
+    
+    // محاكاة تأخير الشبكة
+    await new Promise(resolve => setTimeout(resolve, 1000));
     
     const newPost = {
         title,
@@ -117,43 +125,3 @@ function publishPost() {
     };
     
     posts.push(newPost);
-    localStorage.setItem('shadowNetPosts', JSON.stringify(posts));
-    
-    // تحديث العرض
-    loadAdminPosts();
-    
-    // مسح حقول الإدخال
-    document.getElementById('postTitle').value = '';
-    document.getElementById('postContent').value = '';
-    document.getElementById('postImage').value = '';
-    document.getElementById('postPreview').innerHTML = '';
-    
-    alert('تم نشر المنشور بنجاح!');
-}
-
-// حذف منشور
-function deletePost(index) {
-    if (confirm('هل أنت متأكد من حذف هذا المنشور؟')) {
-        posts.splice(index, 1);
-        localStorage.setItem('shadowNetPosts', JSON.stringify(posts));
-        loadAdminPosts();
-    }
-}
-
-// تنسيق التاريخ
-function formatDate(dateString) {
-    const options = { year: 'numeric', month: 'long', day: 'numeric' };
-    return new Date(dateString).toLocaleDateString('ar-EG', options);
-}
-
-// معاينة المنشور (يمكن إضافة هذه الوظيفة إذا أردت معاينة قبل النشر)
-document.getElementById('postImage').addEventListener('input', function() {
-    const imageUrl = this.value.trim();
-    const preview = document.getElementById('postPreview');
-    
-    if (imageUrl) {
-        preview.innerHTML = `<img src="${imageUrl}" alt="معاينة الصورة" style="max-width:100%; border-radius:4px;">`;
-    } else {
-        preview.innerHTML = '';
-    }
-});
