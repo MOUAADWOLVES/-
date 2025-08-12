@@ -3,51 +3,164 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>𝑺𝒉𝒂𝒅𝒐𝒘𝑵𝒆𝒕</title>
-    <link rel="stylesheet" href="css/style.css">
+    <title>WormGPT - واجهة الدردشة</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #1a1a1a;
+            color: #e0e0e0;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        .chat-header {
+            background-color: #2a2a2a;
+            padding: 15px;
+            border-radius: 10px 10px 0 0;
+            text-align: center;
+            border-bottom: 1px solid #444;
+        }
+        .chat-box {
+            flex-grow: 1;
+            overflow-y: auto;
+            background-color: #2a2a2a;
+            padding: 20px;
+            border-left: 1px solid #444;
+            border-right: 1px solid #444;
+        }
+        .message {
+            margin-bottom: 15px;
+            padding: 10px 15px;
+            border-radius: 8px;
+            max-width: 80%;
+        }
+        .user-message {
+            background-color: #3a3a3a;
+            margin-left: auto;
+            border: 1px solid #555;
+        }
+        .bot-message {
+            background-color: #333366;
+            margin-right: auto;
+            border: 1px solid #444488;
+        }
+        .input-area {
+            display: flex;
+            padding: 15px;
+            background-color: #2a2a2a;
+            border-radius: 0 0 10px 10px;
+            border-top: 1px solid #444;
+        }
+        #user-input {
+            flex-grow: 1;
+            padding: 12px;
+            border: 1px solid #555;
+            border-radius: 5px;
+            background-color: #3a3a3a;
+            color: #e0e0e0;
+            font-size: 16px;
+            margin-right: 10px;
+        }
+        #send-button {
+            padding: 12px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        #send-button:hover {
+            background-color: #45a049;
+        }
+        .typing-indicator {
+            color: #888;
+            font-style: italic;
+            display: none;
+        }
+    </style>
 </head>
 <body>
-    <header>𝑺𝒉𝒂𝒅𝒐𝒘𝑵𝒆𝒕</header>
-    
     <div class="container">
-        <!-- قسم البحث -->
-        <input type="text" class="search-bar" placeholder="ابحث في المنشورات...">
-        
-        <!-- قسم الأدمن -->
-        <div class="admin-section">
-            <h2>قسم الأدمن</h2>
-            <div>
-                <input type="text" class="admin-input" placeholder="اسم المستخدم" id="admin-username">
-                <input type="password" class="admin-input" placeholder="كلمة السر" id="admin-password">
-                <button class="btn" onclick="loginAdmin()">دخول</button>
-            </div>
-            
-            <div id="admin-actions" style="display: none;">
-                <h3>إضافة منشور جديد</h3>
-                <input type="text" class="admin-input" placeholder="عنوان المنشور" id="post-title">
-                <input type="text" class="admin-input" placeholder="رابط الصورة" id="post-image">
-                <input type="text" class="admin-input" placeholder="النص على الزر" id="post-btn-text">
-                <input type="text" class="admin-input" placeholder="رابط الزر" id="post-btn-link">
-                <button class="btn" onclick="addPost()">إضافة منشور</button>
-            </div>
+        <div class="chat-header">
+            <h1>WormGPT - الدردشة الذكية</h1>
         </div>
-        
-        <!-- المنشورات المميزة -->
-        <div id="featured-posts">
-            <h2>مشاركات مميزة</h2>
-            <!-- سيتم إضافة المنشورات هنا عبر JavaScript -->
-        </div>
-        
-        <!-- قسم الصور المصغرة -->
-        <div class="thumbnail-section">
-            <h2>صور مصغرة</h2>
-            <div id="thumbnails">
-                <!-- سيتم إضافة الصور المصغرة هنا عبر JavaScript -->
+        <div class="chat-box" id="chat-box">
+            <div class="message bot-message">
+                مرحبا! أنا WormGPT. كيف يمكنني مساعدتك اليوم؟
             </div>
-            <button class="btn">عرض المزيد</button>
+            <div class="typing-indicator" id="typing">WormGPT يكتب...</div>
+        </div>
+        <div class="input-area">
+            <input type="text" id="user-input" placeholder="اكتب رسالتك هنا..." autocomplete="off">
+            <button id="send-button">إرسال</button>
         </div>
     </div>
 
-    <script src="js/script.js"></script>
+    <script>
+        const chatBox = document.getElementById('chat-box');
+        const userInput = document.getElementById('user-input');
+        const sendButton = document.getElementById('send-button');
+        const typingIndicator = document.getElementById('typing');
+
+        function addMessage(message, isUser) {
+            const messageDiv = document.createElement('div');
+            messageDiv.classList.add('message');
+            messageDiv.classList.add(isUser ? 'user-message' : 'bot-message');
+            messageDiv.textContent = message;
+            chatBox.insertBefore(messageDiv, typingIndicator);
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+
+        async function sendMessage() {
+            const message = userInput.value.trim();
+            if (!message) return;
+            
+            addMessage(message, true);
+            userInput.value = '';
+            
+            // إظهار مؤشر الكتابة
+            typingIndicator.style.display = 'block';
+            chatBox.scrollTop = chatBox.scrollHeight;
+            
+            try {
+                // استخدام API عبر POST (الطريقة المفضلة)
+                const response = await fetch('https://sii3.moayman.top/DARK/api/wormgpt.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: `text=${encodeURIComponent(message)}`
+                });
+                
+                if (!response.ok) {
+                    throw new Error('فشل في الحصول على الرد');
+                }
+                
+                const data = await response.text();
+                addMessage(data, false);
+            } catch (error) {
+                console.error('Error:', error);
+                addMessage('عذرًا، حدث خطأ في الاتصال بالخادم.', false);
+            } finally {
+                typingIndicator.style.display = 'none';
+            }
+        }
+
+        sendButton.addEventListener('click', sendMessage);
+        
+        userInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+    </script>
 </body>
-</html>
+    </html>
