@@ -1,0 +1,1663 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FILM MAX | مسلسلات كرتون</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #e50914;
+            --primary-dark: #b2070f;
+            --dark-color: #141414;
+            --dark-light: #222;
+            --light-color: #f4f4f4;
+            --gray-color: #999;
+            --telegram-color: #0088cc;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--dark-color);
+            color: var(--light-color);
+            line-height: 1.6;
+        }
+        
+        /* Header */
+        header {
+            background: linear-gradient(to bottom, rgba(0,0,0,0.9), rgba(0,0,0,0.7));
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+        }
+        
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .logo-img {
+            height: 50px;
+            border-radius: 5px;
+        }
+        
+        .logo {
+            font-size: 2.2rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        
+        .logo span {
+            color: var(--light-color);
+        }
+        
+        /* Navigation */
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 1.5rem;
+            position: relative;
+        }
+        
+        nav ul li a {
+            color: var(--light-color);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1.1rem;
+            transition: color 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        nav ul li a:hover {
+            color: var(--primary-color);
+        }
+        
+        nav ul li a i {
+            font-size: 1.2rem;
+        }
+        
+        /* Main Content */
+        .container {
+            max-width: 1400px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+        
+        /* Series List */
+        .series-list {
+            display: flex;
+            flex-direction: column;
+            gap: 3rem;
+        }
+        
+        /* Series Item */
+        .series-item {
+            background: #222;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s;
+        }
+        
+        .series-item:hover {
+            transform: translateY(-5px);
+        }
+        
+        .series-header {
+            display: flex;
+            align-items: center;
+            padding: 1.5rem;
+            background: linear-gradient(to right, rgba(0,0,0,0.8), rgba(0,0,0,0.6));
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .series-header:hover {
+            background: linear-gradient(to right, rgba(0,0,0,0.9), rgba(0,0,0,0.7));
+        }
+        
+        .series-poster {
+            width: 180px;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-left: 1.5rem;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+            transition: transform 0.3s;
+        }
+        
+        .series-poster:hover {
+            transform: scale(1.03);
+        }
+        
+        .series-info {
+            flex: 1;
+        }
+        
+        .series-title {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        
+        .new-badge {
+            background: var(--primary-color);
+            color: white;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+        
+        .series-description {
+            font-size: 1rem;
+            color: #ddd;
+            margin-bottom: 1rem;
+            max-width: 800px;
+            line-height: 1.7;
+        }
+        
+        .series-meta {
+            display: flex;
+            gap: 1rem;
+            color: var(--gray-color);
+            font-size: 0.9rem;
+            flex-wrap: wrap;
+        }
+        
+        .series-meta span {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .series-meta i {
+            font-size: 0.8rem;
+        }
+        
+        /* Episodes Section */
+        .episodes-section {
+            display: none;
+            padding: 1.5rem;
+            background: #1a1a1a;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .section-title {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--primary-color);
+            display: inline-block;
+        }
+        
+        .section-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+        
+        .section-btn {
+            background: #333;
+            color: #fff;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .section-btn.active {
+            background: var(--primary-color);
+        }
+        
+        .section-btn:hover {
+            background: #444;
+            transform: translateY(-2px);
+        }
+        
+        .episodes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .episode-card {
+            background: #333;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: all 0.3s;
+            cursor: pointer;
+            position: relative;
+        }
+        
+        .episode-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+        }
+        
+        .episode-img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            transition: transform 0.3s;
+        }
+        
+        .episode-card:hover .episode-img {
+            transform: scale(1.05);
+        }
+        
+        .episode-info {
+            padding: 1rem;
+            position: relative;
+            z-index: 1;
+            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+        }
+        
+        .episode-number {
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 0.3rem;
+            font-size: 1rem;
+        }
+        
+        .episode-title {
+            font-size: 0.95rem;
+            color: #eee;
+        }
+        
+        /* Player Section */
+        .player-container {
+            margin-top: 2rem;
+            background: #000;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+            border: 1px solid #333;
+        }
+        
+        .player-title {
+            background: #111;
+            padding: 1rem;
+            font-size: 1.2rem;
+            border-bottom: 1px solid #333;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .player-title span {
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+        
+        .player-iframe {
+            width: 100%;
+            height: 600px;
+            border: none;
+        }
+        
+        /* Ad Banner */
+        .ad-container {
+            margin: 2rem 0;
+            border-radius: 8px;
+            overflow: hidden;
+            position: relative;
+            border: 1px solid #333;
+            transition: transform 0.3s;
+        }
+        
+        .ad-container:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        
+        .ad-banner {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        
+        .ad-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+            padding: 1rem;
+            text-align: center;
+        }
+        
+        .ad-overlay a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        .ad-overlay a:hover {
+            color: white;
+            text-decoration: underline;
+        }
+        
+        .telegram-icon {
+            color: var(--telegram-color);
+            font-size: 1.3rem;
+        }
+        
+        /* Home Button */
+        .home-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--primary-color);
+            color: #fff;
+            padding: 0.8rem 1.8rem;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s;
+            margin-top: 1rem;
+            font-weight: bold;
+        }
+        
+        .home-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        }
+        
+        /* Sections */
+        .section {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .section.active {
+            display: block;
+        }
+        
+        /* Social Channels */
+        .social-channels {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin: 2rem 0;
+            justify-content: center;
+        }
+        
+        .channel-card {
+            background: #222;
+            border-radius: 8px;
+            padding: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: white;
+            transition: all 0.3s;
+            flex: 1;
+            min-width: 250px;
+            max-width: 300px;
+            border: 1px solid #333;
+        }
+        
+        .channel-card:hover {
+            background: #2a2a2a;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .channel-icon {
+            font-size: 1.8rem;
+            color: var(--telegram-color);
+        }
+        
+        .channel-info h3 {
+            font-size: 1.1rem;
+            margin-bottom: 0.3rem;
+            color: var(--telegram-color);
+        }
+        
+        .channel-info p {
+            font-size: 0.9rem;
+            color: #ccc;
+        }
+        
+        /* Loading Spinner */
+        .loading-spinner {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.8);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        .loading-spinner.active {
+            display: flex;
+        }
+        
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid var(--primary-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .loading-text {
+            color: white;
+            font-size: 1.2rem;
+        }
+        
+        /* Responsive */
+        @media (max-width: 992px) {
+            .series-poster {
+                width: 150px;
+                height: 220px;
+            }
+            
+            .episodes-grid {
+                grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            }
+            
+            .player-iframe {
+                height: 400px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                padding: 1rem;
+            }
+            
+            .logo-container {
+                margin-bottom: 1rem;
+            }
+            
+            .logo {
+                font-size: 2rem;
+            }
+            
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            nav ul li {
+                margin: 0.5rem;
+            }
+            
+            .series-header {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .series-poster {
+                margin-left: 0;
+                margin-bottom: 1rem;
+                width: 150px;
+                height: 200px;
+            }
+            
+            .episodes-grid {
+                grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            }
+            
+            .section-buttons {
+                justify-content: center;
+            }
+            
+            .player-iframe {
+                height: 300px;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .container {
+                padding: 0 1rem;
+            }
+            
+            .series-title {
+                font-size: 1.5rem;
+                justify-content: center;
+            }
+            
+            .series-description {
+                text-align: center;
+            }
+            
+            .series-meta {
+                justify-content: center;
+            }
+            
+            .episodes-grid {
+                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            }
+            
+            .episode-img {
+                height: 180px;
+            }
+            
+            .channel-card {
+                min-width: 100%;
+            }
+        }
+        
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #222;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary-color);
+            border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--primary-dark);
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Spinner -->
+    <div class="loading-spinner" id="loadingSpinner">
+        <div class="spinner"></div>
+        <div class="loading-text">جاري التحميل...</div>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <div class="logo-container">
+            <img src="https://i.ibb.co/whQhCNgQ/file-5.jpg" alt="FILM MAX Logo" class="logo-img">
+            <div class="logo">FILM<span>MAX</span></div>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#" onclick="showSection('home')"><i class="fas fa-home"></i> الأنمي+كرتون</a></li>
+                <li><a href="#" onclick="showSection('movies')"><i class="fas fa-film"></i> الأفلام</a></li>
+                <li><a href="#" onclick="showSection('series')"><i class="fas fa-tv"></i> المسلسلات</a></li>
+                <li><a href="#" onclick="showSection('most-viewed')"><i class="fas fa-fire"></i> الأكثر مشاهدة</a></li>
+                <li><a href="#channels"><i class="fas fa-phone"></i> اتصل بنا</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Ad Banner -->
+        <div class="ad-container">
+            <a href="https://t.me/FIILM_MAX" target="_blank">
+                <img src="https://i.ibb.co/whQhCNgQ/file-5.jpg" alt="انضم إلى قناتنا على تلغرام" class="ad-banner">
+                <div class="ad-overlay">
+                    <a href="https://t.me/FIILM_MAX" target="_blank">
+                        <i class="fab fa-telegram telegram-icon"></i>
+                        انضم إلى القناة الرسمية على تلغرام للحصول على أحدث المسلسلات والأفلام
+                    </a>
+                </div>
+            </a>
+        </div>
+        
+        <!-- Social Channels -->
+        <div class="social-channels" id="channels">
+            <a href="https://t.me/FIILM_MAX" target="_blank" class="channel-card">
+                <i class="fab fa-telegram channel-icon"></i>
+                <div class="channel-info">
+                    <h3>القناة الرسمية</h3>
+                    <p>t.me/FIILM_MAX</p>
+                </div>
+            </a>
+            
+            <a href="https://t.me/IGX_World_Team" target="_blank" class="channel-card">
+                <i class="fab fa-telegram channel-icon"></i>
+                <div class="channel-info">
+                    <h3>القناة الأولى</h3>
+                    <p>t.me/IGX_World_Team</p>
+                </div>
+            </a>
+            
+            <a href="https://t.me/telecyb_er" target="_blank" class="channel-card">
+                <i class="fab fa-telegram channel-icon"></i>
+                <div class="channel-info">
+                    <h3>القناة الثانية</h3>
+                    <p>t.me/telecyb_er</p>
+                </div>
+            </a>
+            
+            <a href="https://t.me/DX_38_WCX" target="_blank" class="channel-card">
+                <i class="fab fa-telegram channel-icon"></i>
+                <div class="channel-info">
+                    <h3>القناة الثالثة</h3>
+                    <p>t.me/DX_38_WCX</p>
+                </div>
+            </a>
+        </div>
+        
+        <!-- Home Button -->
+        <a href="#" onclick="showSection('home')" class="home-btn">
+            <i class="fas fa-home"></i> العودة إلى الصفحة الرئيسية
+        </a>
+        
+        <!-- Home Section -->
+        <div id="home-section" class="section active">
+            <!-- Series List -->
+            <div class="series-list">
+                <!-- مسلسل Lord of Mysteries (2025) -->
+                <div class="series-item">
+                    <div class="series-header" onclick="toggleEpisodes('lord-of-mysteries')">
+                        <img src="https://pub-92474f7785774e91a790e086dfa6b2ef.r2.dev/anime/large-cover/aspYGjixdlKRw6Q1l8k1LWSWQV9TZITeDd5uAQxh.jpg" alt="Lord of Mysteries" class="series-poster">
+                        <div class="series-info">
+                            <h2 class="series-title">Lord of Mysteries (Guimi Zhi Zhu: Xiaochou Pian) <span class="new-badge">جديد 2025</span></h2>
+                            <p class="series-description">أنمي غموض وإثارة يتتبع قصة كلاين موريتي في عالم غريب مليء بالأسرار والقوى الخارقة. عمل جديد مبهر من استوديو Tencent Animation.</p>
+                            <div class="series-meta">
+                                <span><i class="fas fa-list-ol"></i> 13 حلقة</span>
+                                <span><i class="fas fa-tags"></i> غموض - إثارة - خيال</span>
+                                <span><i class="fas fa-calendar-alt"></i> 2025</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="episodes-section" id="lord-of-mysteries-episodes">
+                        <h3 class="section-title">حلقات Lord of Mysteries <small>(أحدث إصدار 2025)</small></h3>
+                        <div class="episodes-grid">
+                            <!-- الحلقات -->
+                            <div class="episode-card" onclick="playEpisode('https://ok.ru/videoembed/9605992090310', 'Lord of Mysteries - الحلقة 1 (2025)')">
+                                <img src="https://pub-92474f7785774e91a790e086dfa6b2ef.r2.dev/anime/large-cover/aspYGjixdlKRw6Q1l8k1LWSWQV9TZITeDd5uAQxh.jpg" alt="الحلقة 1" class="episode-img">
+                                <div class="episode-info">
+                                    <div class="episode-number">الحلقة 1</div>
+                                    <div class="episode-title">البداية الغامضة</div>
+                                </div>
+                            </div>
+                            
+                            <div class="episode-card" onclick="playEpisode('https://ok.ru/videoembed/9606031018694', 'Lord of Mysteries - الحلقة 2 (2025)')">
+                                <img src="https://pub-92474f7785774e91a790e086dfa6b2ef.r2.dev/anime/large-cover/aspYGjixdlKRw6Q1l8k1LWSWQV9TZITeDd5uAQxh.jpg" alt="الحلقة 2" class="episode-img">
+                                <div class="episode-info">
+                                    <div class="episode-number">الحلقة 2</div>
+                                    <div class="episode-title">أسرار أولى</div>
+                                </div>
+                            </div>
+                            
+                            <div class="episode-card" onclick="playEpisode('https://ok.ru/videoembed/9622626110150', 'Lord of Mysteries - الحلقة 3 (2025)')">
+                                <img src="https://pub-92474f7785774e91a790e086dfa6b2ef.r2.dev/anime/large-cover/aspYGjixdlKRw6Q1l8k1LWSWQV9TZITeDd5uAQxh.jpg" alt="الحلقة 3" class="episode-img">
+                                <div class="episode-info">
+                                    <div class="episode-number">الحلقة 3</div>
+                                    <div class="episode-title">لقاء القدر</div>
+                                </div>
+                            </div>
+                            
+                            <div class="episode-card" onclick="playEpisode('https://ok.ru/videoembed/9641050507974', 'Lord of Mysteries - الحلقة 4 (2025)')">
+                                <img src="https://pub-92474f7785774e91a790e086dfa6b2ef.r2.dev/anime/large-cover/aspYGjixdlKRw6Q1l8k1LWSWQV9TZITeDd5uAQxh.jpg" alt="الحلقة 4" class="episode-img">
+                                <div class="episode-info">
+                                    <div class="episode-number">الحلقة 4</div>
+                                    <div class="episode-title">القوة المستترة</div>
+                                </div>
+                            </div>
+                            
+                            <div class="episode-card" onclick="playEpisode('https://ok.ru/videoembed/9658990594758', 'Lord of Mysteries - الحلقة 5 (2025)')">
+                                <img src="https://pub-92474f7785774e91a790e086dfa6b2ef.r2.dev/anime/large-cover/aspYGjixdlKRw6Q1l8k1LWSWQV9TZITeDd5uAQxh.jpg" alt="الحلقة 5" class="episode-img">
+                                <div class="episode-info">
+                                    <div class="episode-number">الحلقة 5</div>
+                                    <div class="episode-title">التحول الكبير</div>
+                                </div>
+                            </div>
+                            
+                            <div class="episode-card" onclick="playEpisode('https://videa.hu/player?v=HFZyZUSoE4TtrVzZ', 'Lord of Mysteries - الحلقة 6 (2025)')">
+                                <img src="https://pub-92474f7785774e91a790e086dfa6b2ef.r2.dev/anime/large-cover/aspYGjixdlKRw6Q1l8k1LWSWQV9TZITeDd5uAQxh.jpg" alt="الحلقة 6" class="episode-img">
+                                <div class="episode-info">
+                                    <div class="episode-number">الحلقة 6</div>
+                                    <div class="episode-title">المواجهة الأولى</div>
+                                </div>
+                            </div>
+                            
+                            <div class="episode-card" onclick="playEpisode('https://ok.ru/videoembed/9717014072006', 'Lord of Mysteries - الحلقة 7 (2025)')">
+                                <img src="https://pub-92474f7785774e91a790e086dfa6b2ef.r2.dev/anime/large-cover/aspYGjixdlKRw6Q1l8k1LWSWQV9TZITeDd5uAQxh.jpg" alt="الحلقة 7" class="episode-img">
+                                <div class="episode-info">
+                                    <div class="episode-number">الحلقة 7</div>
+                                    <div class="episode-title">الحقيقة المخفية</div>
+                                </div>
+                            </div>
+                            
+                            <div class="episode-card" onclick="playEpisode('https://ok.ru/videoembed/9717014072006', 'Lord of Mysteries - الحلقة 8 (2025)')">
+                                <img src="https://pub-92474f7785774e91a790e086dfa6b2ef.r2.dev/anime/large-cover/aspYGjixdlKRw6Q1l8k1LWSWQV9TZITeDd5uAQxh.jpg" alt="الحلقة 8" class="episode-img">
+                                <div class="episode-info">
+                                    <div class="episode-number">الحلقة 8</div>
+                                    <div class="episode-title">نقطة التحول</div>
+                                </div>
+                            </div>
+                            
+                            <!-- حلقات قادمة -->
+                            <script>
+                                for(let i = 9; i <= 13; i++) {
+                                    document.write(`
+                                        <div class="episode-card" onclick="playEpisode('#', 'Lord of Mysteries - الحلقة ${i} (2025)')">
+                                            <img src="https://pub-92474f7785774e91a790e086dfa6b2ef.r2.dev/anime/large-cover/aspYGjixdlKRw6Q1l8k1LWSWQV9TZITeDd5uAQxh.jpg" alt="الحلقة ${i}" class="episode-img">
+                                            <div class="episode-info">
+                                                <div class="episode-number">الحلقة ${i}</div>
+                                                <div class="episode-title">قريباً 2025</div>
+                                            </div>
+                                        </div>
+                                    `);
+                                }
+                            </script>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- مسلسل Mattaku Saikin no Tantei to Kitara -->
+                <div class="series-item">
+                    <div class="series-header" onclick="toggleEpisodes('mattaku')">
+                        <img src="https://a.storyblok.com/f/178900/750x1060/86f145c8a4/mattaku-saiki-no-tantei-to-kitara-teaser-kv.jpg/m/filters:quality(95)format(webp)" alt="Mattaku Saikin no Tantei to Kitara" class="series-poster">
+                        <div class="series-info">
+                            <h2 class="series-title">Mattaku Saikin no Tantei to Kitara</h2>
+                            <p class="series-description">أنمي غموض وكوميديا يتتبع مغامرات المحقق وأحداثه المثيرة المليئة بالمفاجآت.</p>
+                            <div class="series-meta">
+                                <span><i class="fas fa-list-ol"></i> 7 حلقات</span>
+                                <span><i class="fas fa-tags"></i> غموض - كوميدي</span>
+                                <span><i class="fas fa-calendar-alt"></i> 2024</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="episodes-section" id="mattaku-episodes">
+                        <h3 class="section-title">حلقات Mattaku Saikin no Tantei to Kitara</h3>
+                        <div class="episodes-grid">
+                            <div class="episode-card" onclick="playEpisode('https://ok.ru/videoembed/9616227371718', 'Mattaku Saikin no Tantei to Kitara - الحلقة 1')">
+                                <img src="https://a.storyblok.com/f/178900/750x1060/86f145c8a4/mattaku-saiki-no-tantei-to-kitara-teaser-kv.jpg/m/filters:quality(95)format(webp)" alt="الحلقة 1" class="episode-img">
+                                <div class="episode-info">
+                                    <div class="episode-number">الحلقة 1</div>
+                                    <div class="episode-title">بداية التحقيق</div>
+                                </div>
+                            </div>
+                            
+                            <div class="episode-card" onclick="playEpisode('https://ok.ru/videoembed/9632272026310', 'Mattaku Saikin no Tantei to Kitara - الحلقة 2')">
+                                <img src="https://a.storyblok.com/f/178900/750x1060/86f145c8a4/mattaku-saiki-no-tantei-to-kitara-teaser-kv.jpg/m/filters:quality(95)format(webp)" alt="الحلقة 2" class="episode-img">
+                                <div class="episode-info">
+                                    <div class="episode-number">الحلقة 2</div>
+                                    <div class="episode-title">لغز جديد</div>
+                                </div>
+                            </div>
+                            
+                            <div class="episode-card" onclick="playEpisode('https://ok.ru/videoembed/9650190551750', 'Mattaku Saikin no Tantei to Kitara - الحلقة 3')">
+                                <img src="https://a.storyblok.com/f/178900/750x1060/86f145c8a4/mattaku-saiki-no-tantei-to-kitara-teaser-kv.jpg/m/filters:quality(95)format(webp)" alt="الحلقة 3" class="episode-img">
+                                <div class="episode-info">
+                                    <div class="episode-number">الحلقة 3</div>
+                                    <div class="episode-title">الخيط الأول</div>
+                                </div>
+                            </div>
+                            
+                            <div class="episode-card" onclick="playEpisode('https://ok.ru/videoembed/9668682910406', 'Mattaku Saikin no Tantei to Kitara - الحلقة 4')">
+                                <img src="https://a.storyblok.com/f/178900/750x1060/86f145c8a4/mattaku-saiki-no-tantei-to-kitara-teaser-kv.jpg/m/filters:quality(95)format(webp)" alt="الحلقة 4" class="episode-img">
+                                <div class="episode-info">
+                                    <div class="episode-number">الحلقة 4</div>
+                                    <div class="episode-title">المواجهة الأولى</div>
+                                </div>
+                            </div>
+                            
+                            <div class="episode-card" onclick="playEpisode('https://ok.ru/videoembed/9687145319110', 'Mattaku Saikin no Tantei to Kitara - الحلقة 5')">
+                                <img src="https://a.storyblok.com/f/178900/750x1060/86f145c8a4/mattaku-saiki-no-tantei-to-kitara-teaser-kv.jpg/m/filters:quality(95)format(webp)" alt="الحلقة 5" class="episode-img">
+                                <div class="episode-info">
+                                    <div class="episode-number">الحلقة 5</div>
+                                    <div class="episode-title">السر يقترب</div>
+                                </div>
+                            </div>
+                            
+                            <div class="episode-card" onclick="playEpisode('https://ok.ru/videoembed/9706749364934', 'Mattaku Saikin no Tantei to Kitara - الحلقة 6')">
+                                <img src="https://a.storyblok.com/f/178900/750x1060/86f145c8a4/mattaku-saiki-no-tantei-to-kitara-teaser-kv.jpg/m/filters:quality(95)format(webp)" alt="الحلقة 6" class="episode-img">
+                                <div class="episode-info">
+                                    <div class="episode-number">الحلقة 6</div>
+                                    <div class="episode-title">الكشف المبدئي</div>
+                                </div>
+                            </div>
+                            
+                            <div class="episode-card" onclick="playEpisode('https://ok.ru/videoembed/9727212194502', 'Mattaku Saikin no Tantei to Kitara - الحلقة 7')">
+                                <img src="https://a.storyblok.com/f/178900/750x1060/86f145c8a4/mattaku-saiki-no-tantei-to-kitara-teaser-kv.jpg/m/filters:quality(95)format(webp)" alt="الحلقة 7" class="episode-img">
+                                <div class="episode-info">
+                                    <div class="episode-number">الحلقة 7</div>
+                                    <div class="episode-title">نهاية القضية</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- مسلسل غامبول -->
+                <div class="series-item">
+                    <div class="series-header" onclick="toggleEpisodes('gumball')">
+                        <img src="https://image.tmdb.org/t/p/w200/uaSfbUjZXIMKNunaxKzQ6XmSrNR.jpg" alt="غامبول" class="series-poster">
+                        <div class="series-info">
+                            <h2 class="series-title">مسلسل غامبول</h2>
+                            <p class="series-description">مسلسل كرتوني كوميدي يتابع مغامرات غامبول واترسون الصبي الأزرق ذو 12 عامًا مع عائلته وأصدقائه في مدينة إلموود.</p>
+                            <div class="series-meta">
+                                <span><i class="fas fa-list-ol"></i> 40 حلقة</span>
+                                <span><i class="fas fa-tags"></i> كوميدي</span>
+                                <span><i class="fas fa-calendar-alt"></i> 2011-2019</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="episodes-section" id="gumball-episodes">
+                        <div class="section-buttons">
+                            <button class="section-btn active" onclick="showAllEpisodes('gumball')"><i class="fas fa-list"></i> جميع الحلقات</button>
+                            <button class="section-btn" onclick="showSeason('gumball', 1)"><i class="fas fa-star"></i> الموسم 1</button>
+                        </div>
+                        
+                        <h3 class="section-title">حلقات مسلسل غامبول</h3>
+                        <div class="episodes-grid" id="gumball-grid">
+                            <!-- الحلقات من 1 إلى 20 -->
+                            <div class="episode-card" onclick="playEpisode('https://streamtape.net/e/16j4jbJlrQS07D', 'غامبول - الحلقة 1')" data-season="1">
+                                <img src="https://image.tmdb.org/t/p/w200/uaSfbUjZXIMKNunaxKzQ6XmSrNR.jpg" alt="غامبول الحلقة 1" class="episode-img">
+                                <div class="episode-info">
+                                    <div class="episode-number">الحلقة 1</div>
+                                    <div class="episode-title">بداية المغامرات</div>
+                                </div>
+                            </div>
+                            
+                             <div class="episode-card" onclick="playEpisode('https://streamtape.net/e/L2xyrl7VqGTbRB', 'غامبول - الحلقة 2')">
+                                <img src="https://image.tmdb.org/t/p/w200/uaSfbUjZXIMKNunaxKzQ6XmSrNR.jpg" alt="غامبول الحلقة 2" class="episode-img">
+                                <div class="episode-info">
+                                    <div class="episode-number">الحلقة 2</div>
+                                    <div class="episode-title">المغامرة الثانية</div>
+                                </div>
+                            </div>
+                            
+                            <div class="episode-card" onclick="playEpisode('https://streamtape.net/e/p2rBBl4qZeCr4eK', 'غامبول - الحلقة 3')">
+                                <img src="https://image.tmdb.org/t/p/w200/uaSfbUjZXIMKNunaxKzQ6XmSrNR.jpg" alt="غامبول الحلقة 3" class="episode-img">
+                                <div class="episode-info">
+                                    <div class="episode-number">الحلقة 3</div>
+                                    <div class="episode-title">التحدي الكبير</div>
+                                </div>
+                            </div>
+                            
+                            <div class="episode-card" onclick="playEpisode('https://streamtape.net/e/a4xgxV71ZbtJJb', 'غامبول - الحلقة 4')">
+                                <img src="https://image.tmdb.org/t/p/w200/uaSfbUjZXIMKNunaxKzQ6XmSrNR.jpg" alt="غامبول الحلقة 4" class="episode-img">
+                                <div class="episode-info">
+                                    <div class="episode-number">الحلقة 4</div>
+                                    <div class="episode-title">السر المخفي</div>
+                                </div>
+                            </div>
+                            
+                            <div class="episode-card" onclick="playEpisode('https://streamtape.net/e/eojrwxl9vqHY1KB', 'غامبول - الحلقة 5')">
+                                <img src="https://image.tmdb.org/t/p/w200/uaSfbUjZXIMKNunaxKzQ6XmSrNR.jpg" alt="غامبول الحلقة 5" class="episode-img">
+                                <div class="episode-info">
+                                    <div class="episode-number">الحلقة 5</div>
+                                    <div class="episode-title">المعركة الكبرى</div>
+                                </div>
+                            </div>
+                            
+                            <div class="episode-card" onclick="playEpisode('https://streamtape.net/e/gqVd0vWgY3SGJl', 'غامبول - الحلقة 6')">
+                                <img src="https://image.tmdb.org/t/p/w200/uaSfbUjZXIMKNunaxKzQ6XmSrNR.jpg" alt="غامبول الحلقة 6" class="episode-img">
+                                <div class="episode-info">
+                                    <div class="episode-number">الحلقة 6</div>
+                                    <div class="episode-title">الاختفاء الغامض</div>
+                                </div>
+                            </div>
+                            
+                            <div class="episode-card" onclick="playEpisode('https://streamtape.net/e/g1ZdKvz2ZgIqWgg', 'غامبول - الحلقة 7')">
+                                <img src="https://image.tmdb.org/t/p/w200/uaSfbUjZXIMKNunaxKzQ6XmSrNR.jpg" alt="غامبول الحلقة 7" class="episode-img">
+                                <div class="episode-info">
+                                    <div class="episode-number">الحلقة 7</div>
+                                    <div class="episode-title">اللغز المحير</div>
+                                </div>
+                            </div>
+                            
+                            <div class="episode-card" onclick="playEpisode('https://streamtape.net/e/llv6MOka2MF7elM', 'غامبول - الحلقة 8')">
+                                <img src="https://image.tmdb.org/t/p/w200/uaSfbUjZXIMKNunaxKzQ6XmSrNR.jpg" alt="غامبول الحلقة 8" class="episode-img">
+                                <div class="episode-info">
+                                    <div class="episode-number">الحلقة 8</div>
+                                    <div class="episode-title">المنافسة الشرسة</div>
+                                </div>
+                            </div>
+                            
+                            <div class="episode-card" onclick="playEpisode('https://streamtape.net/e/oQJZ9Ro3Lps9VP', 'غامبول - الحلقة 9')">
+                                <img src="https://image.tmdb.org/t/p/w200/uaSfbUjZXIMKNunaxKzQ6XmSrNR.jpg" alt="غامبول الحلقة 9" class="episode-img">
+                                <div class="episode-info">
+                                    <div class="episode-number">الحلقة 9</div>
+                                    <div class="episode-title">الكشف الحاسم</div>
+                                </div>
+                            </div>
+                            
+                            <div class="episode-card" onclick="playEpisode('https://streamtape.net/e/yADAeV8Yg7TmB0', 'غامبول - الحلقة 10')">
+                                <img src="https://image.tmdb.org/t/p/w200/uaSfbUjZXIMKNunaxKzQ6XmSrNR.jpg" alt="غامبول الحلقة 10" class="episode-img">
+                                <div class="episode-info">
+                                    <div class="episode-number">الحلقة 10</div>
+                                    <div class="episode-title">النهاية المؤقتة</div>
+                                </div>
+                            </div>
+                            
+                            <!-- الحلقات من 11 إلى 20 -->
+                            <div class="episode-card" onclick="playEpisode('https://streamtape.net/e/pYx3Q9o8LOSraYb', 'غامبول - الحلقة 11')">
+                                <img src="https://image.tmdb.org/t/p/w200/uaSfbUjZXIMKNunaxKzQ6XmSrNR.jpg" alt="غامبول الحلقة 11" class="episode-img">
+                                <div class="episode-info">
+                                    <div class="episode-number">الحلقة 11</div>
+                                    <div class="episode-title">البداية الجديدة</div>
+                                </div>
+                            </div>
+                            
+                            <div class="episode-card" onclick="playEpisode('https://streamtape.net/e/LpDOPoVyqZsRQ00', 'غامبول - الحلقة 12')">
+                                <img src="https://image.tmdb.org/t/p/w200/uaSfbUjZXIMKNunaxKzQ6XmSrNR.jpg" alt="غامبول الحلقة 12" class="episode-img">
+                                <div class="episode-info">
+                                    <div class="episode-number">الحلقة 12</div>
+                                    <div class="episode-title">العودة الكبرى</div>
+                                </div>
+                            </div>
+                            
+                            <div class="episode-card" onclick="playEpisode('https://streamtape.net/e/yDMwPYyXZ6C11R6', 'غامبول - الحلقة 13')">
+                                <img src="https://image.tmdb.org/t/p/w200/uaSfbUjZXIMKNunaxKzQ6XmSrNR.jpg" alt="غامبول الحلقة 13" class="episode-img">
+                                <div class="episode-info">
+                                    <div class="episode-number">الحلقة 13</div>
+                                    <div class="episode-title">المفاجأة الصادمة</div>
+                                </div>
+                            </div>
+                            
+                            <div class="episode-card" onclick="playEpisode('https://streamtape.net/e/9e9zOBwgdWTa8lx', 'غامبول - الحلقة 14')">
+                                <img src="https://image.tmdb.org/t/p/w200/uaSfbUjZXIMKNunaxKzQ6XmSrNR.jpg" alt="غامبول الحلقة 14" class="episode-img">
+                                <div class="episode-info">
+                                    <div class="episode-number">الحلقة 14</div>
+                                    <div class="episode-title">الحقيقة المرة</div>
+                                </div>
+                            </div>
+                            
+                            <div class="episode-card" onclick="playEpisode('https://streamtape.net/e/2996jxykx3IPwj', 'غامبول - الحلقة 15')">
+                                <img src="https://image.tmdb.org/t/p/w200/uaSfbUjZXIMKNunaxKzQ6XmSrNR.jpg" alt="غامبول الحلقة 15" class="episode-img">
+                                <div class="episode-info">
+                                    <div class="episode-number">الحلقة 15</div>
+                                    <div class="episode-title">القرار المصيري</div>
+                                </div>
+                            </div>
+                            
+                            <div class="episode-card" onclick="playEpisode('https://streamtape.net/e/6mB2oOG3K7I9Dav', 'غامبول - الحلقة 16')">
+                                <img src="https://image.tmdb.org/t/p/w200/uaSfbUjZXIMKNunaxKzQ6XmSrNR.jpg" alt="غامبول الحلقة 16" class="episode-img">
+                                <div class="episode-info">
+                                    <div class="episode-number">الحلقة 16</div>
+                                    <div class="episode-title">اللقاء المنتظر</div>
+                                </div>
+                            </div>
+                            
+                            <div class="episode-card" onclick="playEpisode('https://streamtape.net/e/BJL6oG8Maocyd4b', 'غامبول - الحلقة 17')">
+                                <img src="https://image.tmdb.org/t/p/w200/uaSfbUjZXIMKNunaxKzQ6XmSrNR.jpg" alt="غامبول الحلقة 17" class="episode-img">
+                                <div class="episode-info">
+                                    <div class="episode-number">الحلقة 17</div>
+                                    <div class="episode-title">الخطة الجريئة</div>
+                                </div>
+                            </div>
+                            
+                            <div class="episode-card" onclick="playEpisode('https://streamtape.net/e/3AZrgxWzgdud7kg', 'غامبول - الحلقة 18')">
+                                <img src="https://image.tmdb.org/t/p/w200/uaSfbUjZXIMKNunaxKzQ6XmSrNR.jpg" alt="غامبول الحلقة 18" class="episode-img">
+                                <div class="episode-info">
+                                    <div class="episode-number">الحلقة 18</div>
+                                    <div class="episode-title">المواجهة النهائية</div>
+                                </div>
+                            </div>
+                            
+                            <div class="episode-card" onclick="playEpisode('https://streamtape.net/e/6kbB4bekWGt9Bjw', 'غامبول - الحلقة 19')">
+                                <img src="https://image.tmdb.org/t/p/w200/uaSfbUjZXIMKNunaxKzQ6XmSrNR.jpg" alt="غامبول الحلقة 19" class="episode-img">
+                                <div class="episode-info">
+                                    <div class="episode-number">الحلقة 19</div>
+                                    <div class="episode-title">النهاية السعيدة</div>
+                                </div>
+                            </div>
+                            
+                            <div class="episode-card" onclick="playEpisode('https://streamtape.net/e/BQYkq8b7VwcyJv6', 'غامبول - الحلقة 20')">
+                                <img src="https://image.tmdb.org/t/p/w200/uaSfbUjZXIMKNunaxKzQ6XmSrNR.jpg" alt="غامبول الحلقة 20" class="episode-img">
+                                <div class="episode-info">
+                                    <div class="episode-number">الحلقة 20</div>
+                                    <div class="episode-title">البداية الجديدة</div>
+                                </div>
+                            </div>
+                            
+                            <!-- الحلقات من 21 إلى 40 -->
+                            <script>
+                                for(let i = 21; i <= 40; i++) {
+                                    document.write(`
+                                        <div class="episode-card" onclick="playEpisode('#', 'غامبول - الحلقة ${i}')" data-season="2">
+                                            <img src="https://image.tmdb.org/t/p/w200/uaSfbUjZXIMKNunaxKzQ6XmSrNR.jpg" alt="غامبول الحلقة ${i}" class="episode-img">
+                                            <div class="episode-info">
+                                                <div class="episode-number">الحلقة ${i}</div>
+                                                <div class="episode-title">قريباً</div>
+                                            </div>
+                                        </div>
+                                    `);
+                                }
+                            </script>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- مسلسل Osomatsu-san الموسم الرابع -->
+<div class="series-item">
+    <div class="series-header" onclick="toggleEpisodes('osomatsu')">
+        <img src="https://a.storyblok.com/f/178900/750x991/87c75dcfa7/mr-osomatsu-season-4-main-visual.jpg/m/filters:quality(95)format(webp)" alt="Osomatsu-san الموسم الرابع" class="series-poster">
+        <div class="series-info">
+            <h2 class="series-title">Osomatsu-san الموسم الرابع</h2>
+            <p class="series-description">مسلسل كوميدي ياباني عن ستة إخوة متطابقين يعيشون حياة بطالة مليئة بالمغامرات المضحكة والمواقف الغريبة.</p>
+            <div class="series-meta">
+                <span><i class="fas fa-list-ol"></i> 13 حلقة</span>
+                <span><i class="fas fa-tags"></i> كوميدي</span>
+                <span><i class="fas fa-calendar-alt"></i> 2025</span>
+            </div>
+        </div>
+    </div>
+    
+    <div class="episodes-section" id="osomatsu-episodes">
+        <h3 class="section-title">حلقات Osomatsu-san الموسم الرابع</h3>
+        <div class="episodes-grid">
+            <!-- الحلقة 1 -->
+            <div class="episode-card" onclick="playEpisode('https://ok.ru/videoembed/9632576637638', 'Osomatsu-san - الحلقة 1')">
+                <img src="https://a.storyblok.com/f/178900/750x991/87c75dcfa7/mr-osomatsu-season-4-main-visual.jpg/m/filters:quality(95)format(webp)" alt="الحلقة 1" class="episode-img">
+                <div class="episode-info"><div class="episode-number">الحلقة 1</div><div class="episode-title">It’s Starting Again</div></div>
+            </div>
+            <!-- الحلقة 2 -->
+            <div class="episode-card" onclick="playEpisode('https://ok.ru/videoembed/9650521180870', 'Osomatsu-san - الحلقة 2')">
+                <img src="https://a.storyblok.com/f/178900/750x991/87c75dcfa7/mr-osomatsu-season-4-main-visual.jpg/m/filters:quality(95)format(webp)" alt="الحلقة 2" class="episode-img">
+                <div class="episode-info"><div class="episode-number">الحلقة 2</div><div class="episode-title">Watermelon Alien</div></div>
+            </div>
+            <!-- الحلقة 3 -->
+            <div class="episode-card" onclick="playEpisode('https://ok.ru/videoembed/9669014457030', 'Osomatsu-san - الحلقة 3')">
+                <img src="https://a.storyblok.com/f/178900/750x991/87c75dcfa7/mr-osomatsu-season-4-main-visual.jpg/m/filters:quality(95)format(webp)" alt="الحلقة 3" class="episode-img">
+                <div class="episode-info"><div class="episode-number">الحلقة 3</div><div class="episode-title">Thunderstorms and Crew Cuts</div></div>
+            </div>
+            <!-- الحلقة 4 -->
+            <div class="episode-card" onclick="playEpisode('https://ok.ru/videoembed/9687462513350', 'Osomatsu-san - الحلقة 4')">
+                <img src="https://a.storyblok.com/f/178900/750x991/87c75dcfa7/mr-osomatsu-season-4-main-visual.jpg/m/filters:quality(95)format(webp)" alt="الحلقة 4" class="episode-img">
+                <div class="episode-info"><div class="episode-number">الحلقة 4</div><div class="episode-title">Temple Festival</div></div>
+            </div>
+            <!-- الحلقة 5 -->
+            <div class="episode-card" onclick="playEpisode('https://ok.ru/videoembed/9707184065222', 'Osomatsu-san - الحلقة 5')">
+                <img src="https://a.storyblok.com/f/178900/750x991/87c75dcfa7/mr-osomatsu-season-4-main-visual.jpg/m/filters:quality(95)format(webp)" alt="الحلقة 5" class="episode-img">
+                <div class="episode-info"><div class="episode-number">الحلقة 5</div><div class="episode-title">اضغط للمشاهذة</div></div>
+            </div>
+            <!-- الحلقة 6 -->
+            <div class="episode-card" onclick="playEpisode('https://ok.ru/videoembed/9727354473158', 'Osomatsu-san - الحلقة 6')">
+                <img src="https://a.storyblok.com/f/178900/750x991/87c75dcfa7/mr-osomatsu-season-4-main-visual.jpg/m/filters:quality(95)format(webp)" alt="الحلقة 6" class="episode-img">
+                <div class="episode-info"><div class="episode-number">الحلقة 6</div><div class="episode-title">اضغط للمشاهذة</div></div>
+            </div>
+            <!-- الحلقات 7 إلى 13 -->
+            <div class="episode-card" onclick="playEpisode('#', 'Osomatsu-san - الحلقة 7')">
+                <img src="https://a.storyblok.com/f/178900/750x991/87c75dcfa7/mr-osomatsu-season-4-main-visual.jpg/m/filters:quality(95)format(webp)" alt="الحلقة 7" class="episode-img">
+                <div class="episode-info"><div class="episode-number">الحلقة 7</div><div class="episode-title">قريباً 2025</div></div>
+            </div>
+            <div class="episode-card" onclick="playEpisode('#', 'Osomatsu-san - الحلقة 8')">
+                <img src="https://a.storyblok.com/f/178900/750x991/87c75dcfa7/mr-osomatsu-season-4-main-visual.jpg/m/filters:quality(95)format(webp)" alt="الحلقة 8" class="episode-img">
+                <div class="episode-info"><div class="episode-number">الحلقة 8</div><div class="episode-title">قريباً 2025</div></div>
+            </div>
+            <div class="episode-card" onclick="playEpisode('#', 'Osomatsu-san - الحلقة 9')">
+                <img src="https://a.storyblok.com/f/178900/750x991/87c75dcfa7/mr-osomatsu-season-4-main-visual.jpg/m/filters:quality(95)format(webp)" alt="الحلقة 9" class="episode-img">
+                <div class="episode-info"><div class="episode-number">الحلقة 9</div><div class="episode-title">قريباً 2025</div></div>
+            </div>
+            <div class="episode-card" onclick="playEpisode('#', 'Osomatsu-san - الحلقة 10')">
+                <img src="https://a.storyblok.com/f/178900/750x991/87c75dcfa7/mr-osomatsu-season-4-main-visual.jpg/m/filters:quality(95)format(webp)" alt="الحلقة 10" class="episode-img">
+                <div class="episode-info"><div class="episode-number">الحلقة 10</div><div class="episode-title">قريباً 2025</div></div>
+            </div>
+            <div class="episode-card" onclick="playEpisode('#', 'Osomatsu-san - الحلقة 11')">
+                <img src="https://a.storyblok.com/f/178900/750x991/87c75dcfa7/mr-osomatsu-season-4-main-visual.jpg/m/filters:quality(95)format(webp)" alt="الحلقة 11" class="episode-img">
+                <div class="episode-info"><div class="episode-number">الحلقة 11</div><div class="episode-title">قريباً 2025</div></div>
+            </div>
+            <div class="episode-card" onclick="playEpisode('#', 'Osomatsu-san - الحلقة 12')">
+                <img src="https://a.storyblok.com/f/178900/750x991/87c75dcfa7/mr-osomatsu-season-4-main-visual.jpg/m/filters:quality(95)format(webp)" alt="الحلقة 12" class="episode-img">
+                <div class="episode-info"><div class="episode-number">الحلقة 12</div><div class="episode-title">قريباً 2025</div></div>
+            </div>
+            <div class="episode-card" onclick="playEpisode('#', 'Osomatsu-san - الحلقة 13')">
+                <img src="https://a.storyblok.com/f/178900/750x991/87c75dcfa7/mr-osomatsu-season-4-main-visual.jpg/m/filters:quality(95)format(webp)" alt="الحلقة 13" class="episode-img">
+                <div class="episode-info"><div class="episode-number">الحلقة 13</div><div class="episode-title">قريباً 2025</div></div>
+            </div>
+        </div>
+    </div>
+</div>
+        
+        <!-- Movies Section -->
+        <div id="movies-section" class="section">
+            <div class="series-list">
+                <!-- فيلم Otome Game -->
+                <div class="series-item">
+                    <div class="series-header" onclick="toggleEpisodes('otome-movie')">
+                        <img src="https://m.media-amazon.com/images/M/MV5BODgzZmM3ZjItYzA2NC00ZWYyLTljYWYtNTVlMDVlMGU1MDc0XkEyXkFqcGc@._V1_.jpg" class="series-poster">
+                        <div class="series-info">
+                            <h2 class="series-title">Otome Game no Hametsu Flag shika Nai Akuyaku Reijou ni Tensei shiteshimatta Movie</h2>
+                            <p class="series-description">فيلم أنمي ياباني يواصل قصة كاترينا كلايس ومغامراتها المليئة بالمواقف المضحكة والرومانسية في عالم الألعاب.</p>
+                            <div class="series-meta">
+                                <span><i class="fas fa-film"></i> فيلم</span>
+                                <span><i class="fas fa-tags"></i> كوميدي - رومانسي - فانتازيا</span>
+                                <span><i class="fas fa-calendar-alt"></i> 2025</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="episodes-section" id="otome-movie-episodes">
+                        <h3 class="section-title">مشاهدة الفيلم</h3>
+                        <div class="episodes-grid">
+                            <div class="episode-card" onclick="playEpisode('https://videa.hu/player?v=rEFCfCClnNNAyzuO', 'Otome Game Movie')">
+                                <img src="https://witanime.red/wp-content/uploads/2025/06/Otome-Game-no-Hametsu-Flag-shika-Nai-Akuyaku-Reijou-ni-Tensei-shiteshimatta...-Movie-413x559.jpg" class="episode-img">
+                                <div class="episode-info">
+                                    <div class="episode-number">الفيلم</div>
+                                    <div class="episode-title">اضغط للمشاهدة</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+               <!-- فيلم Boku no Hero Academia the Movie 4: You're Next -->
+<div class="series-item">
+    <div class="series-header" onclick="toggleEpisodes('hero-academia-movie')">
+        <img src="https://m.media-amazon.com/images/M/MV5BNGVmZDJhNjItYzdlOC00ODA2LWFkYjctY2NmMzNiZTQ2NTVjXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg" class="series-poster">
+        <div class="series-info">
+            <h2 class="series-title">Boku no Hero Academia the Movie 4: You're Next</h2>
+            <p class="series-description">الفيلم الرابع من سلسلة Boku no Hero Academia، مغامرة جديدة لأبطال UA High في مواجهة تهديد غير مسبوق.</p>
+            <div class="series-meta">
+                <span><i class="fas fa-film"></i> فيلم</span>
+                <span><i class="fas fa-tags"></i> أكشن - شونين - بطل خارق</span>
+                <span><i class="fas fa-calendar-alt"></i> 2024</span>
+            </div>
+        </div>
+    </div>
+    <div class="episodes-section" id="hero-academia-movie-episodes">
+        <h3 class="section-title">مشاهدة الفيلم</h3>
+        <div class="episodes-grid">
+            <div class="episode-card" onclick="playEpisode('https://videa.hu/player?v=R7WpdIHA1DTrmjAP', 'Boku no Hero Academia Movie 4: You\'re Next')">
+                <img src="https://m.media-amazon.com/images/M/MV5BNGVmZDJhNjItYzdlOC00ODA2LWFkYjctY2NmMzNiZTQ2NTVjXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg" class="episode-img">
+                <div class="episode-info">
+                    <div class="episode-number">الفيلم</div>
+                    <div class="episode-title">اضغط للمشاهدة</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+                <!-- فيلم Predator: Killer of Killers -->
+                <div class="series-item">
+                    <div class="series-header" onclick="toggleEpisodes('predator-movie')">
+                        <img src="https://m.media-amazon.com/images/M/MV5BNjM2MjA4YzQtYjBkNS00YmU3LTllOTgtMDQzMjkzM2Q4MmM5XkEyXkFqcGc@._V1_.jpg" class="series-poster">
+                        <div class="series-info">
+                            <h2 class="series-title">Predator: Killer of Killers</h2>
+                            <p class="series-description">فيلم أكشن وخيال علمي يتابع مواجهات جديدة مع الكائن الفضائي الشهير بريداتور في مغامرة مليئة بالإثارة والعنف.</p>
+                            <div class="series-meta">
+                                <span><i class="fas fa-film"></i> فيلم</span>
+                                <span><i class="fas fa-tags"></i> أكشن - خيال علمي - إثارة</span>
+                                <span><i class="fas fa-calendar-alt"></i> 2025</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="episodes-section" id="predator-movie-episodes">
+                        <h3 class="section-title">مشاهدة الفيلم</h3>
+                        <div class="episodes-grid">
+                            <div class="episode-card" onclick="playEpisode('https://videa.hu/player?v=DtU4L0rA7i1g2NjW', 'Predator: Killer of Killers')">
+                                <img src="https://witanime.red/wp-content/uploads/2025/06/Predator-Killer-of-Killers-scaled-413x559.jpg" class="episode-img">
+                                <div class="episode-info">
+                                    <div class="episode-number">الفيلم</div>
+                                    <div class="episode-title">اضغط للمشاهدة</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Most Viewed Section -->
+        <div id="most-viewed-section" class="section">
+            <div class="series-list">
+                <h2 style="text-align: center; margin-bottom: 2rem; font-size: 2rem; color: var(--primary-color);">الأكثر مشاهدة</h2>
+                
+                <!-- مسلسل غامبول (الأكثر مشاهدة) -->
+                <div class="series-item">
+                    <div class="series-header" onclick="toggleEpisodes('gumball-most-viewed')">
+                        <img src="https://image.tmdb.org/t/p/w200/uaSfbUjZXIMKNunaxKzQ6XmSrNR.jpg" alt="غامبول" class="series-poster">
+                        <div class="series-info">
+                            <h2 class="series-title">مسلسل غامبول</h2>
+                            <p class="series-description">مسلسل كرتوني كوميدي يتابع مغامرات غامبول واترسون الصبي الأزرق ذو 12 عامًا مع عائلته وأصدقائه في مدينة إلموود.</p>
+                            <div class="series-meta">
+                                <span><i class="fas fa-list-ol"></i> 40 حلقة</span>
+                                <span><i class="fas fa-tags"></i> كوميدي</span>
+                                <span><i class="fas fa-calendar-alt"></i> 2011-2019</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="episodes-section" id="gumball-most-viewed-episodes">
+                        <h3 class="section-title">الحلقات الأكثر مشاهدة</h3>
+                        <div class="episodes-grid">
+                            <div class="episode-card" onclick="playEpisode('https://streamtape.net/e/16j4jbJlrQS07D', 'غامبول - الحلقة 1')">
+                                <img src="https://image.tmdb.org/t/p/w200/uaSfbUjZXIMKNunaxKzQ6XmSrNR.jpg" alt="غامبول الحلقة 1" class="episode-img">
+                                <div class="episode-info">
+                                    <div class="episode-number">الحلقة 1</div>
+                                    <div class="episode-title">بداية المغامرات</div>
+                                </div>
+                            </div>
+                            
+                            <div class="episode-card" onclick="playEpisode('https://streamtape.net/e/L2xyrl7VqGTbRB', 'غامبول - الحلقة 2')">
+                                <img src="https://image.tmdb.org/t/p/w200/uaSfbUjZXIMKNunaxKzQ6XmSrNR.jpg" alt="غامبول الحلقة 2" class="episode-img">
+                                <div class="episode-info">
+                                    <div class="episode-number">الحلقة 2</div>
+                                    <div class="episode-title">المغامرة الثانية</div>
+                                </div>
+                            </div>
+                            
+                            <div class="episode-card" onclick="playEpisode('https://streamtape.net/e/p2rBBl4qZeCr4eK', 'غامبول - الحلقة 3')">
+                                <img src="https://image.tmdb.org/t/p/w200/uaSfbUjZXIMKNunaxKzQ6XmSrNR.jpg" alt="غامبول الحلقة 3" class="episode-img">
+                                <div class="episode-info">
+                                    <div class="episode-number">الحلقة 3</div>
+                                    <div class="episode-title">التحدي الكبير</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Player Section -->
+        <section class="player-section">
+            <div class="player-container">
+                <div class="player-title" id="current-episode-title">
+                    <span id="player-title-text">إختر حلقة للمشاهدة</span>
+                    <span id="player-loading" style="display: none; color: var(--primary-color);">
+                        <i class="fas fa-spinner fa-spin"></i> جاري التحميل...
+                    </span>
+                </div>
+                <div class="player" id="player">
+                    <iframe id="player-iframe" class="player-iframe" allowfullscreen></iframe>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Ad Banner -->
+        <div class="ad-container">
+            <a href="https://t.me/FIILM_MAX" target="_blank">
+                <img src="https://i.ibb.co/whQhCNgQ/file-5.jpg" alt="انضم إلى قناتنا على تلغرام" class="ad-banner">
+                <div class="ad-overlay">
+                    <a href="https://t.me/FIILM_MAX" target="_blank">
+                        <i class="fab fa-telegram telegram-icon"></i>
+                        انضم إلى القناة الرسمية على تلغرام للحصول على أحدث المسلسلات والأفلام
+                    </a>
+                </div>
+            </a>
+        </div>
+        
+        <!-- Social Channels -->
+        <div class="social-channels">
+            <a href="https://t.me/FIILM_MAX" target="_blank" class="channel-card">
+                <i class="fab fa-telegram channel-icon"></i>
+                <div class="channel-info">
+                    <h3>القناة الرسمية</h3>
+                    <p>t.me/FIILM_MAX</p>
+                </div>
+            </a>
+            
+            <a href="https://t.me/IGX_World_Team" target="_blank" class="channel-card">
+                <i class="fab fa-telegram channel-icon"></i>
+                <div class="channel-info">
+                    <h3>القناة الأولى</h3>
+                    <p>t.me/IGX_World_Team</p>
+                </div>
+            </a>
+            
+            <a href="https://t.me/telecyb_er" target="_blank" class="channel-card">
+                <i class="fab fa-telegram channel-icon"></i>
+                <div class="channel-info">
+                    <h3>القناة الثانية</h3>
+                    <p>t.me/telecyb_er</p>
+                </div>
+            </a>
+            
+            <a href="https://t.me/DX_38_WCX" target="_blank" class="channel-card">
+                <i class="fab fa-telegram channel-icon"></i>
+                <div class="channel-info">
+                    <h3>القناة الثالثة</h3>
+                    <p>t.me/DX_38_WCX</p>
+                </div>
+            </a>
+        </div>
+        
+        <!-- Home Button -->
+        <a href="#" onclick="showSection('home')" class="home-btn">
+            <i class="fas fa-home"></i> العودة إلى الصفحة الرئيسية
+        </a>
+    </div>
+    
+    <script>
+        // تبديل عرض الحلقات
+        function toggleEpisodes(seriesId) {
+            const episodesSection = document.getElementById(`${seriesId}-episodes`);
+            episodesSection.style.display = episodesSection.style.display === 'none' ? 'block' : 'none';
+            
+            if(episodesSection.style.display === 'block') {
+                episodesSection.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+        
+        // عرض جميع الحلقات
+        function showAllEpisodes(seriesId) {
+            const episodes = document.querySelectorAll(`#${seriesId}-grid .episode-card`);
+            episodes.forEach(ep => {
+                ep.style.display = 'block';
+            });
+            
+            // تحديث الأزرار النشطة
+            document.querySelectorAll(`#${seriesId}-episodes .section-btn`).forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+        }
+        
+        // عرض حلقات موسم معين
+        function showSeason(seriesId, seasonNum) {
+            const episodes = document.querySelectorAll(`#${seriesId}-grid .episode-card`);
+            episodes.forEach(ep => {
+                if(ep.getAttribute('data-season') == seasonNum) {
+                    ep.style.display = 'block';
+                } else {
+                    ep.style.display = 'none';
+                }
+            });
+            
+            // تحديث الأزرار النشطة
+            document.querySelectorAll(`#${seriesId}-episodes .section-btn`).forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+        }
+        
+        // تشغيل الحلقات
+        function playEpisode(url, title) {
+            if(url === '#') {
+                alert('هذه الحلقة غير متاحة حالياً، سيتم إضافتها قريباً');
+                return;
+            }
+            
+            document.getElementById('player-title-text').textContent = title;
+            document.getElementById('player-loading').style.display = 'inline';
+            
+            // إظهار مؤشر التحميل
+            document.getElementById('loadingSpinner').classList.add('active');
+            
+            // إنشاء iframe بدون إعلانات
+            const iframe = document.getElementById('player-iframe');
+            iframe.src = url;
+            
+            // إخفاء مؤشر التحميل بعد ثانيتين
+            setTimeout(() => {
+                document.getElementById('loadingSpinner').classList.remove('active');
+                document.getElementById('player-loading').style.display = 'none';
+            }, 2000);
+            
+            // التمرير إلى المشغل
+            document.getElementById('player').scrollIntoView({ behavior: 'smooth' });
+            
+            // بدء عداد الإعلانات
+            startAdTimer();
+        }
+        
+        // إخفاء الإعلانات في iframe
+        window.addEventListener('message', function(e) {
+            if(e.data === 'FrameClosed') {
+                document.getElementById('player-iframe').src = '';
+                document.getElementById('player-title-text').textContent = 'إختر حلقة للمشاهدة';
+            }
+        });
+        
+        // عرض إعلان كل 5 دقائق
+        let adTimer;
+        function startAdTimer() {
+            clearTimeout(adTimer);
+            adTimer = setTimeout(() => {
+                showAdModal();
+                startAdTimer(); // إعادة تشغيل العداد
+            }, 5 * 60 * 1000); // 5 دقائق
+        }
+        
+        // عرض إعلان عند تحميل الصفحة
+        window.onload = function() {
+            setTimeout(() => {
+                showAdModal();
+            }, 30000); // بعد 30 ثانية من تحميل الصفحة
+        };
+        
+        // عرض إعلان مودال
+        function showAdModal() {
+            const adContainer = document.createElement('div');
+            adContainer.style.position = 'fixed';
+            adContainer.style.top = '0';
+            adContainer.style.left = '0';
+            adContainer.style.right = '0';
+            adContainer.style.bottom = '0';
+            adContainer.style.backgroundColor = 'rgba(0,0,0,0.9)';
+            adContainer.style.zIndex = '99999';
+            adContainer.style.display = 'flex';
+            adContainer.style.flexDirection = 'column';
+            adContainer.style.justifyContent = 'center';
+            adContainer.style.alignItems = 'center';
+            adContainer.style.padding = '20px';
+            
+            const adContent = document.createElement('div');
+            adContent.style.maxWidth = '800px';
+            adContent.style.width = '100%';
+            adContent.style.backgroundColor = '#222';
+            adContent.style.borderRadius = '10px';
+            adContent.style.overflow = 'hidden';
+            adContent.style.boxShadow = '0 0 20px rgba(0,0,0,0.5)';
+            adContent.style.position = 'relative';
+            
+            const adHeader = document.createElement('div');
+            adHeader.style.backgroundColor = '#111';
+            adHeader.style.padding = '15px';
+            adHeader.style.display = 'flex';
+            adHeader.style.justifyContent = 'space-between';
+            adHeader.style.alignItems = 'center';
+            adHeader.style.borderBottom = '1px solid #333';
+            
+            const adTitle = document.createElement('h3');
+            adTitle.style.color = 'var(--primary-color)';
+            adTitle.style.margin = '0';
+            adTitle.style.fontSize = '1.2rem';
+            adTitle.innerHTML = '<i class="fab fa-telegram" style="color: var(--telegram-color); margin-left: 5px;"></i> انضم إلى قنواتنا على تلغرام';
+            
+            const closeBtn = document.createElement('button');
+            closeBtn.innerHTML = '<i class="fas fa-times"></i>';
+            closeBtn.style.background = 'transparent';
+            closeBtn.style.color = 'white';
+            closeBtn.style.border = 'none';
+            closeBtn.style.fontSize = '1.2rem';
+            closeBtn.style.cursor = 'pointer';
+            closeBtn.onclick = function() {
+                document.body.removeChild(adContainer);
+            };
+            
+            adHeader.appendChild(adTitle);
+            adHeader.appendChild(closeBtn);
+            
+            const adBody = document.createElement('div');
+            adBody.style.padding = '20px';
+            
+            const logoContainer = document.createElement('div');
+            logoContainer.style.display = 'flex';
+            logoContainer.style.justifyContent = 'center';
+            logoContainer.style.marginBottom = '20px';
+            
+            const logo = document.createElement('img');
+            logo.src = 'https://i.ibb.co/whQhCNgQ/file-5.jpg';
+            logo.style.height = '80px';
+            logo.style.borderRadius = '5px';
+            
+            logoContainer.appendChild(logo);
+            
+            const channelsGrid = document.createElement('div');
+            channelsGrid.style.display = 'grid';
+            channelsGrid.style.gridTemplateColumns = 'repeat(auto-fit, minmax(250px, 1fr))';
+            channelsGrid.style.gap = '15px';
+            channelsGrid.style.marginTop = '20px';
+            
+            const channels = [
+                {
+                    name: 'القناة الرسمية',
+                    link: 'https://t.me/FIILM_MAX',
+                    description: 't.me/FIILM_MAX'
+                },
+                {
+                    name: 'القناة الأولى',
+                    link: 'https://t.me/IGX_World_Team',
+                    description: 't.me/IGX_World_Team'
+                },
+                {
+                    name: 'القناة الثانية',
+                    link: 'https://t.me/telecyb_er',
+                    description: 't.me/telecyb_er'
+                },
+                {
+                    name: 'القناة الثالثة',
+                    link: 'https://t.me/DX_38_WCX',
+                    description: 't.me/DX_38_WCX'
+                }
+            ];
+            
+            channels.forEach(channel => {
+                const channelCard = document.createElement('a');
+                channelCard.href = channel.link;
+                channelCard.target = '_blank';
+                channelCard.style.backgroundColor = '#333';
+                channelCard.style.borderRadius = '8px';
+                channelCard.style.padding = '15px';
+                channelCard.style.textDecoration = 'none';
+                channelCard.style.color = 'white';
+                channelCard.style.transition = 'all 0.3s';
+                channelCard.style.display = 'flex';
+                channelCard.style.alignItems = 'center';
+                channelCard.style.gap = '15px';
+                channelCard.style.border = '1px solid #444';
+                
+                channelCard.onmouseover = function() {
+                    this.style.backgroundColor = '#3a3a3a';
+                    this.style.transform = 'translateY(-3px)';
+                };
+                
+                channelCard.onmouseout = function() {
+                    this.style.backgroundColor = '#333';
+                    this.style.transform = 'translateY(0)';
+                };
+                
+                const icon = document.createElement('i');
+                icon.className = 'fab fa-telegram';
+                icon.style.color = 'var(--telegram-color)';
+                icon.style.fontSize = '1.8rem';
+                
+                const infoDiv = document.createElement('div');
+                
+                const name = document.createElement('h3');
+                name.style.margin = '0 0 5px 0';
+                name.style.color = 'var(--telegram-color)';
+                name.textContent = channel.name;
+                
+                const desc = document.createElement('p');
+                desc.style.margin = '0';
+                desc.style.color = '#ccc';
+                desc.style.fontSize = '0.9rem';
+                desc.textContent = channel.description;
+                
+                infoDiv.appendChild(name);
+                infoDiv.appendChild(desc);
+                
+                channelCard.appendChild(icon);
+                channelCard.appendChild(infoDiv);
+                
+                channelsGrid.appendChild(channelCard);
+            });
+            
+            const adFooter = document.createElement('div');
+            adFooter.style.backgroundColor = '#111';
+            adFooter.style.padding = '15px';
+            adFooter.style.textAlign = 'center';
+            adFooter.style.borderTop = '1px solid #333';
+            adFooter.style.fontSize = '0.9rem';
+            adFooter.style.color = '#aaa';
+            
+            adFooter.textContent = '© 2025 FILM MAX - جميع الحقوق محفوظة';
+            
+            adBody.appendChild(logoContainer);
+            adBody.appendChild(channelsGrid);
+            
+            adContent.appendChild(adHeader);
+            adContent.appendChild(adBody);
+            adContent.appendChild(adFooter);
+            
+            adContainer.appendChild(adContent);
+            document.body.appendChild(adContainer);
+        }
+        
+        // عرض وإخفاء الأقسام
+        function showSection(sectionId) {
+            // إخفاء جميع الأقسام
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // إظهار القسم المطلوب
+            document.getElementById(`${sectionId}-section`).classList.add('active');
+            
+            // التمرير إلى الأعلى
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+        
+        // إخفاء مؤشر التحميل عند اكتمال تحميل الصفحة
+        window.addEventListener('load', function() {
+            setTimeout(() => {
+                document.getElementById('loadingSpinner').classList.remove('active');
+            }, 1000);
+        });
+    </script>
+</body>
+</html>
