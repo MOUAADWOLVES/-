@@ -14,6 +14,7 @@
             --light-color: #f4f4f4;
             --gray-color: #999;
             --telegram-color: #0088cc;
+            --verified-color: #1DA1F2;
         }
         
         * {
@@ -197,6 +198,71 @@
         
         .series-meta i {
             font-size: 0.8rem;
+        }
+        
+        /* Developer Info */
+        .developer-info {
+            background: #222;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            border: 1px solid #333;
+        }
+        
+        .developer-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--primary-color);
+        }
+        
+        .developer-details h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .verified-badge {
+            color: var(--verified-color);
+            font-size: 1rem;
+        }
+        
+        .developer-details p {
+            color: #ccc;
+            margin-bottom: 0.5rem;
+        }
+        
+        .developer-contact {
+            display: flex;
+            gap: 15px;
+            margin-top: 1rem;
+        }
+        
+        .contact-btn {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            background: #333;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        
+        .contact-btn:hover {
+            background: #444;
+            transform: translateY(-2px);
+        }
+        
+        .contact-btn i {
+            font-size: 1rem;
         }
         
         /* Episodes Section */
@@ -516,6 +582,15 @@
             .player-iframe {
                 height: 400px;
             }
+            
+            .developer-info {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .developer-contact {
+                justify-content: center;
+            }
         }
         
         @media (max-width: 768px) {
@@ -635,7 +710,7 @@
                 <li><a href="#" onclick="showSection('movies')"><i class="fas fa-film"></i> الأفلام</a></li>
                 <li><a href="#" onclick="showSection('series')"><i class="fas fa-tv"></i> المسلسلات</a></li>
                 <li><a href="#" onclick="showSection('most-viewed')"><i class="fas fa-fire"></i> الأكثر مشاهدة</a></li>
-                <li><a href="#channels"><i class="fas fa-phone"></i> اتصل بنا</a></li>
+                <li><a href="#developer"><i class="fas fa-user"></i> المطور</a></li>
             </ul>
         </nav>
     </header>
@@ -655,16 +730,24 @@
             </a>
         </div>
         
+        <!-- Developer Section -->
+   <div class="developer-info" id="developer" style="text-align: center;">
+    <img src="https://i.ibb.co/8Dmcbxhk/file-6.jpg" alt="المطور" class="developer-avatar" style="display: block; margin: 0 auto;">
+    <div style="display: flex; justify-content: center; align-items: center; margin-top: 10px;">
+        <h3 style="font-size: 24px; font-weight: bold; margin: 0;">⌯𝗠𝗢𝗨𝗔𝗔𝗗</h3>
+        <i class="fas fa-check-circle" style="color: #1DA1F2; margin-right: 5px; font-size: 20px;"></i>
+    </div>
+    <p>:كُن قوي • فـ الحياة تــُـۿلك الضـ؏ـفاءَ،"🖤</p>
+    <p>مطور ومصمم واجهة FILM MAX</p>
+    <div class="developer-contact" style="justify-content: center;">
+        <a href="https://t.me/MBl_py" target="_blank" class="contact-btn">
+            <i class="fab fa-telegram"></i> تلغرام
+        </a>
+    </div>
+</div>
+        
         <!-- Social Channels -->
-        <div class="social-channels" id="channels">
-            <a href="https://t.me/FIILM_MAX" target="_blank" class="channel-card">
-                <i class="fab fa-telegram channel-icon"></i>
-                <div class="channel-info">
-                    <h3>القناة الرسمية</h3>
-                    <p>t.me/FIILM_MAX</p>
-                </div>
-            </a>
-            
+        <div class="social-channels">
             <a href="https://t.me/IGX_World_Team" target="_blank" class="channel-card">
                 <i class="fab fa-telegram channel-icon"></i>
                 <div class="channel-info">
