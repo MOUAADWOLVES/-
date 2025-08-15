@@ -28,8 +28,27 @@
             background-color: var(--dark-color);
             color: var(--light-color);
             line-height: 1.6;
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
         }
         
+        #protection-message {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: black;
+            color: red;
+            font-size: 24px;
+            text-align: center;
+            padding-top: 20%;
+            z-index: 9999;
+        }
+
         /* Header */
         header {
             background: linear-gradient(to bottom, rgba(0,0,0,0.9), rgba(0,0,0,0.7));
@@ -102,6 +121,64 @@
             max-width: 1400px;
             margin: 2rem auto;
             padding: 0 2rem;
+        }
+        
+        /* Developer Info */
+        .developer-info {
+            background: #222;
+            border-radius: 10px;
+            padding: 2rem;
+            margin: 2rem 0;
+            text-align: center;
+            border: 1px solid #333;
+        }
+        
+        .developer-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--primary-color);
+            display: block;
+            margin: 0 auto 1rem;
+        }
+        
+        .developer-details h3 {
+            font-size: 1.8rem;
+            margin: 0.5rem 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .verified-badge {
+            color: var(--verified-color);
+            font-size: 1.2rem;
+        }
+        
+        .developer-contact {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 1.5rem;
+        }
+        
+        .contact-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: #333;
+            color: white;
+            padding: 0.7rem 1.5rem;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        
+        .contact-btn:hover {
+            background: #444;
+            transform: translateY(-3px);
         }
         
         /* Series List */
@@ -198,71 +275,6 @@
         
         .series-meta i {
             font-size: 0.8rem;
-        }
-        
-        /* Developer Info */
-        .developer-info {
-            background: #222;
-            border-radius: 10px;
-            padding: 1.5rem;
-            margin: 2rem 0;
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            border: 1px solid #333;
-        }
-        
-        .developer-avatar {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 3px solid var(--primary-color);
-        }
-        
-        .developer-details h3 {
-            font-size: 1.5rem;
-            margin-bottom: 0.5rem;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        
-        .verified-badge {
-            color: var(--verified-color);
-            font-size: 1rem;
-        }
-        
-        .developer-details p {
-            color: #ccc;
-            margin-bottom: 0.5rem;
-        }
-        
-        .developer-contact {
-            display: flex;
-            gap: 15px;
-            margin-top: 1rem;
-        }
-        
-        .contact-btn {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            background: #333;
-            color: white;
-            padding: 0.5rem 1rem;
-            border-radius: 5px;
-            text-decoration: none;
-            transition: all 0.3s;
-        }
-        
-        .contact-btn:hover {
-            background: #444;
-            transform: translateY(-2px);
-        }
-        
-        .contact-btn i {
-            font-size: 1rem;
         }
         
         /* Episodes Section */
@@ -582,15 +594,6 @@
             .player-iframe {
                 height: 400px;
             }
-            
-            .developer-info {
-                flex-direction: column;
-                text-align: center;
-            }
-            
-            .developer-contact {
-                justify-content: center;
-            }
         }
         
         @media (max-width: 768px) {
@@ -692,6 +695,11 @@
     </style>
 </head>
 <body>
+    <!-- Protection Message -->
+    <div id="protection-message">
+        ⚠️ غير مسموح بفحص أو نسخ محتوى هذه الصفحة
+    </div>
+
     <!-- Loading Spinner -->
     <div class="loading-spinner" id="loadingSpinner">
         <div class="spinner"></div>
@@ -717,34 +725,23 @@
 
     <!-- Main Content -->
     <div class="container">
-        <!-- Ad Banner -->
-        <div class="ad-container">
-            <a href="https://t.me/FIILM_MAX" target="_blank">
-                <img src="https://i.ibb.co/whQhCNgQ/file-5.jpg" alt="انضم إلى قناتنا على تلغرام" class="ad-banner">
-                <div class="ad-overlay">
-                    <a href="https://t.me/FIILM_MAX" target="_blank">
-                        <i class="fab fa-telegram telegram-icon"></i>
-                        انضم إلى القناة الرسمية على تلغرام للحصول على أحدث المسلسلات والأفلام
+        <!-- Developer Info -->
+        <div class="developer-info" id="developer">
+            <img src="https://i.ibb.co/8Dmcbxhk/file-6.jpg" alt="المطور" class="developer-avatar">
+            <div class="developer-details">
+                <h3>
+                    ⌯𝗠𝗢𝗨𝗔𝗔𝗗
+                    <i class="fas fa-check-circle verified-badge" title="حساب موثوق"></i>
+                </h3>
+                <p>:كُن قوي • فـ الحياة تــُـۿلك الضـ؏ـفاءَ،"🖤</p>
+                <p>مطور ومصمم واجهة FILM MAX</p>
+                <div class="developer-contact">
+                    <a href="https://t.me/MBL_py" target="_blank" class="contact-btn">
+                        <i class="fab fa-telegram"></i> تواصل عبر تلغرام
                     </a>
                 </div>
-            </a>
+            </div>
         </div>
-        
-        <!-- Developer Section -->
-   <div class="developer-info" id="developer" style="text-align: center;">
-    <img src="https://i.ibb.co/8Dmcbxhk/file-6.jpg" alt="المطور" class="developer-avatar" style="display: block; margin: 0 auto;">
-    <div style="display: flex; justify-content: center; align-items: center; margin-top: 10px;">
-        <h3 style="font-size: 24px; font-weight: bold; margin: 0;">⌯𝗠𝗢𝗨𝗔𝗔𝗗</h3>
-        <i class="fas fa-check-circle" style="color: #1DA1F2; margin-right: 5px; font-size: 20px;"></i>
-    </div>
-    <p>:كُن قوي • فـ الحياة تــُـۿلك الضـ؏ـفاءَ،"🖤</p>
-    <p>مطور ومصمم واجهة FILM MAX</p>
-    <div class="developer-contact" style="justify-content: center;">
-        <a href="https://t.me/MBl_py" target="_blank" class="contact-btn">
-            <i class="fab fa-telegram"></i> تلغرام
-        </a>
-    </div>
-</div>
         
         <!-- Social Channels -->
         <div class="social-channels">
